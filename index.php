@@ -9,7 +9,7 @@
     <pre>
         <?php
         
-        var_dump($_POST, $_GET, $_SERVER);
+        // var_dump($_POST, $_GET, $_SERVER);
         
         define("BASE_URI", str_replace("\\", "/", substr(__DIR__, strlen($_SERVER["DOCUMENT_ROOT"]))));
         
@@ -17,7 +17,10 @@
         
         $app = new Core\Core();
         $app->run();
-        
+
+        $test = new Model\UserModel();
+        $test->tes();
+
         ?>
     </pre>
 </body>

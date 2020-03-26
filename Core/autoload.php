@@ -1,21 +1,13 @@
 <?php
 
-function autoload($classname)
+function autoload($className)
 {
-    static $counter = 0;
-    $path = ["./src/Model/", "./src/View", "./src/Controller/", "./Core/"];
-    $extension = ".php";
+    $fullPath = $className . ".php";
 
-    $fullPath = $path[$counter] . explode("\\", $classname)[count(explode("\\", $classname)) - 1] . $extension;
+    $fullPath = str_replace("\\", "/", $fullPath);
 
-    if (!file_exists($fullPath)) 
-    {
-        if ($counter <= count($path)) 
-        {
-            $counter++;
-            autoload($classname);
-        }
-        return false;
+    if (!file_exists($fullPath)) {
+        $fullPath = "./src/" . $fullPath;
     }
 
     include_once $fullPath;

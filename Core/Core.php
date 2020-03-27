@@ -1,41 +1,48 @@
 <?php
 
 namespace Core;
-
 use Router;
 
 class Core
 {
+    public function __construct() {
+        require_once("src/routes.php");
+    }
+
     public function run()
     {
         echo __CLASS__ . " [ OK ]" . PHP_EOL;
         
-        // if(($route = Router::get("/")) != null) {
-        //     echo "url de base /";
-        //     $controller = $route["controller"];
-        // }
-        // else {
-            // DYNAMIQUE
+        $myurl = explode("MVC_PiePHP", $_SERVER["REQUEST_URI"]);
+
+        if (($route = Router::get($myurl[1])) != null) {
+            $class = ucfirst($route["controller"]) . "Controller";
+            $action = $route["action"] . "Action";
+
+            $controller = new $class();
+            $controller->$action();
+        }
+        else {
             $arr = explode("/" , $_SERVER["REDIRECT_URL"]);
             $class = ucfirst($arr[3] . "Controller");
             
             if ($class == "UserController") {
                 if (isset($arr[4])) {
                     if ($arr[4] != "") {
-                        $methode = $arr[4] . "Action";
+                        $action = $arr[4] . "Action";
                     }
                     else {
-                        $methode = "indexAction";
+                        $action = "indexAction";
                     }
                 }
                 else {
-                    $methode = "indexAction";
+                    $action = "indexAction";
                 }
                 
                 $controller = new $class();
-                
-                if (method_exists($controller, $methode)) {
-                    $controller->$methode();
+
+                if (method_exists($controller, $action)) {
+                    $controller->$action();
                 }
                 else {
                     echo "404";
@@ -44,6 +51,6 @@ class Core
             else {
                 echo "404";
             }
-        // }
+        }
     }
 }

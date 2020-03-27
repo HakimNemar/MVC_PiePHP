@@ -10,8 +10,7 @@ class Router
     }
 
     public static function get($url)
-    {
-        var_dump(self::$routes);
+    { 
         return array_key_exists($url, self::$routes) ? self::$routes[$url] : null;
 
         // retourne un tableau associatif contenant

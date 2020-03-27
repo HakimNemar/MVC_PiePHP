@@ -7,7 +7,7 @@ function autoload($className)
     $fullPath = str_replace("\\", "/", $fullPath);
     
     if (!file_exists($fullPath)) {
-        if ($fullPath == "UserController.php"){
+        if ($fullPath == "UserController.php" || $fullPath == "AppController.php"){
             $fullPath = "./src/Controller/" . $fullPath;
         }
         elseif ($fullPath == "Router.php") {
@@ -17,7 +17,7 @@ function autoload($className)
             $fullPath = "./src/" . $fullPath;
         }
     }
-    
+    //  echo $fullPath . "<br>";
     include_once $fullPath;
 }
 

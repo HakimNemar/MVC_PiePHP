@@ -18,9 +18,6 @@
         $app = new Core\Core();
         $app->run();
 
-        // $test = new Model\UserModel();
-        // $test->tes();
-
         ?>
     </pre>
 </body>

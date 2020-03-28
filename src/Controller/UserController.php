@@ -1,14 +1,12 @@
 <?php
 
-class UserController
+class UserController extends Controller
 {
-    public function indexAction()
-    {
+    public function indexAction() {
         echo "je suis dans UserController / indexAction";
     }
 
-    public function addAction()
-    {
+    public function addAction() {
         echo "je suis dans UserController / addAction";
     }
 }

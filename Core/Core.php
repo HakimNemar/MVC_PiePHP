@@ -26,7 +26,7 @@ class Core
             $arr = explode("/" , $_SERVER["REDIRECT_URL"]);
             $class = ucfirst($arr[3] . "Controller");
             
-            if ($class == "UserController") {
+            if ($class == "UserController" || $class == "AppController") {
                 if (isset($arr[4])) {
                     if ($arr[4] != "") {
                         $action = $arr[4] . "Action";

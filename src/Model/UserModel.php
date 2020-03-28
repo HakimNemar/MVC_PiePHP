@@ -2,6 +2,12 @@
 
 namespace Model;
 
-class UserModel {
+class UserModel 
+{
+    private $email;
+    private $password;
 
+    function save() {
+
+    }
 }

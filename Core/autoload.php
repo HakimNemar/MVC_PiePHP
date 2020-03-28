@@ -17,7 +17,6 @@ function autoload($className)
             $fullPath = "./src/" . $fullPath;
         }
     }
-    //  echo $fullPath . "<br>";
     include_once $fullPath;
 }
 

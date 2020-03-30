@@ -10,7 +10,7 @@ function autoload($className)
         if ($fullPath == "UserController.php" || $fullPath == "AppController.php"){
             $fullPath = "./src/Controller/" . $fullPath;
         }
-        elseif ($fullPath == "Router.php") {
+        elseif ($fullPath == "Router.php" || $fullPath == "Controller.php") {
             $fullPath = "./Core/" . $fullPath;
         }
         else {

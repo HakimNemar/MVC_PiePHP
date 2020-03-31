@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 function autoload($className)
 {
     $fullPath = $className . ".php";
@@ -20,4 +22,4 @@ function autoload($className)
     include_once $fullPath;
 }
 
-spl_autoload_register("autoload");
+spl_autoload_register("Core\autoload");

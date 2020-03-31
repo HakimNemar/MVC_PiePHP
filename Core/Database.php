@@ -7,8 +7,7 @@ class Database {
     private $dbuser = "root";
     private $dbpass = "";
 
-    protected function OpenCon()
-    {
+    protected function OpenCon() {
         $conn = new \PDO('mysql:host='.$this->dbhost.';dbname=piephp;charset=utf8mb4', $this->dbuser, $this->dbpass);
         return $conn;
     }

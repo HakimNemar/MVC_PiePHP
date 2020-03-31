@@ -1,6 +1,8 @@
 <?php
 
 namespace Core;
+
+use Controller\UserController;
 use Router;
 
 class Core
@@ -9,8 +11,7 @@ class Core
         require_once("src/routes.php");
     }
 
-    public function run()
-    {
+    public function run() {
         echo __CLASS__ . " [ OK ]" . PHP_EOL;
         
         $myurl = explode("MVC_PiePHP", $_SERVER["REQUEST_URI"]);
@@ -18,8 +19,9 @@ class Core
         if (($route = Router::get($myurl[1])) != null) {
             $class = ucfirst($route["controller"]) . "Controller";
             $action = $route["action"] . "Action";
-
-            $controller = new $class();
+            $name = "\Controller\\";
+            $con = $name . $class;
+            $controller = new UserController();
             $controller->$action();
         }
         else {
@@ -39,8 +41,10 @@ class Core
                     $action = "indexAction";
                 }
                 
-                $controller = new $class();
-
+                $name = "\Controller\\";
+                $con = $name . $class;
+                $controller = new $con();
+                
                 if (method_exists($controller, $action)) {
                     $controller->$action();
                 }

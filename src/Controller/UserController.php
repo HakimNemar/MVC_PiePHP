@@ -6,6 +6,12 @@ use Model\UserModel;
 
 class UserController extends \Core\Controller
 {
+    protected $req;
+
+    public function __construct() {
+        $this->req = new \Core\Request();
+    }
+
     public function indexAction() {
         echo "je suis dans UserController / indexAction";
         echo $this->render("index");
@@ -13,7 +19,7 @@ class UserController extends \Core\Controller
 
     public function addAction() {
         if (isset($_POST["email"]) && isset($_POST["password"])) {
-            $user = new UserModel($_POST["email"], $_POST["password"]);
+            $user = new UserModel($this->req->getParam($_POST)["email"], $this->req->getParam($_POST)["password"]);
             $user->save();
             echo $this->render("login");
         }
@@ -21,22 +27,17 @@ class UserController extends \Core\Controller
             echo $this->render("register");
         }
     }
-    
-    // public function registerAction() {
-    //     $test = new UserModel($_POST["email"], $_POST["password"]);
-    //     $test->save();
-    // }
 
     public function loginAction() {
         if ($_POST == null) {
             echo $this->render("login");
         }
         else {
-            if (isset($_POST["emailCo"]) && isset($_POST["passwordCo"])) {
-                $test = new UserModel($_POST["emailCo"], $_POST["passwordCo"]);
-                $test->login();
+            if (isset($this->req->getParam($_POST)["emailCo"]) && isset($this->req->getParam($_POST)["passwordCo"])) {
+                $log = new UserModel($this->req->getParam($_POST)["emailCo"], $this->req->getParam($_POST)["passwordCo"]);
+                $log->login();
                 
-                if ($test->login() == true) {
+                if ($log->login() == true) {
                     echo $this->render("home");
                 }
                 else {
@@ -46,7 +47,7 @@ class UserController extends \Core\Controller
         }
     }
 
-    public function homeAction() {
-        echo $this->render("home");
+    public function errorAction() {
+        echo $this->render("404");
     }
 }

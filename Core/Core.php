@@ -15,13 +15,13 @@ class Core
         echo __CLASS__ . " [ OK ]" . PHP_EOL;
         
         $myurl = explode("MVC_PiePHP", $_SERVER["REQUEST_URI"]);
-
+        $name = "\Controller\\";
+        
         if (($route = Router::get($myurl[1])) != null) {
             $class = ucfirst($route["controller"]) . "Controller";
             $action = $route["action"] . "Action";
-            $name = "\Controller\\";
             $con = $name . $class;
-            $controller = new UserController();
+            $controller = new $con();
             $controller->$action();
         }
         else {
@@ -41,7 +41,6 @@ class Core
                     $action = "indexAction";
                 }
                 
-                $name = "\Controller\\";
                 $con = $name . $class;
                 $controller = new $con();
                 
@@ -49,11 +48,13 @@ class Core
                     $controller->$action();
                 }
                 else {
-                    echo "404";
+                    $action = "errorAction";
+                    $controller->$action();
                 }
             }
             else {
-                echo "404";
+                $controller = new UserController();
+                $controller->errorAction();
             }
         }
     }

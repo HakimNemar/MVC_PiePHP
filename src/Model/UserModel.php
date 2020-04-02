@@ -37,9 +37,9 @@ class UserModel extends \Core\Database
         return $result["id"];
     }
 
-    function create($mail) {
-        $sth = $this->OpenCon()->prepare("DELETE FROM users WHERE email = :mail");
-        $sth->execute([":mail" => $mail]);
+    function create($mail, $password) {
+        $sth = $this->OpenCon()->prepare("INSERT INTO users (email, password) VALUES (:mail, :password)");
+        $sth->execute([":mail" => $mail, ":password" => $password]);
     }
 
     function read($mail) {

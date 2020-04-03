@@ -2,12 +2,14 @@
 
 namespace Core;
 
-class ORM extends Database
+use Core\Database;
+
+class ORM
 {
     private $conn;
 
     function __construct() {
-        $this->conn = $this->OpenCon();
+        $this->conn = Database::OpenCon();
     }
 
     public function create($table, $fields) {
@@ -63,14 +65,14 @@ class ORM extends Database
         }
         $sth = $this->conn->prepare($query);
         $sth->execute();
-        $res = $sth->fetchAll();
+        $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $res;
     }
 
     public function read($table, $id) {
         $sth = $this->conn->prepare("SELECT * FROM $table WHERE id = :id");
         $sth->execute([":id" => $id]);
-        $res = $sth->fetch();
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
         return $res;
     }
     

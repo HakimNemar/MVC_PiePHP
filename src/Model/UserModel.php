@@ -2,23 +2,27 @@
 
 namespace Model;
 
-class UserModel extends \Core\Database
+use Core\Database;
+
+class UserModel extends \Core\Entity
 {
     private $email;
     private $password;
+    private $conn;
 
     public function __construct($email, $password) {
         $this->email = $email;
         $this->password = $password;
+        $this->conn = Database::OpenCon();
     }
 
     function save() {
-        $sth = $this->OpenCon()->prepare('INSERT INTO users (email, password) VALUES (:email, :password)');
+        $sth = $this->conn->prepare('INSERT INTO users (email, password) VALUES (:email, :password)');
         $sth->execute([":email" => $this->email, ":password" => $this->password]);
     }
 
     function login() {
-        $sth = $this->OpenCon()->prepare("SELECT * FROM users WHERE email = :mail");
+        $sth = $this->conn->prepare("SELECT * FROM users WHERE email = :mail");
         $sth->execute([":mail" => $this->email]);
         $result = $sth->fetch();
 
@@ -31,20 +35,20 @@ class UserModel extends \Core\Database
     }
 
     function getId($mail) {
-        $sth = $this->OpenCon()->prepare("SELECT id FROM users WHERE email = :mail");
+        $sth = $this->conn->prepare("SELECT id FROM users WHERE email = :mail");
         $sth->execute([":mail" => $mail]);
         $result = $sth->fetch();
         return $result["id"];
     }
 
     function create($mail, $password) {
-        $sth = $this->OpenCon()->prepare("INSERT INTO users (email, password) VALUES (:mail, :password)");
+        $sth = $this->conn->prepare("INSERT INTO users (email, password) VALUES (:mail, :password)");
         $sth->execute([":mail" => $mail, ":password" => $password]);
     }
 
     function read($mail) {
         $id = $this->getId($mail);
-        $sth = $this->OpenCon()->prepare("SELECT * FROM users WHERE id = :id");
+        $sth = $this->conn->prepare("SELECT * FROM users WHERE id = :id");
         $sth->execute([":id" => $id]);
         $res = $sth->fetch();
 
@@ -53,18 +57,18 @@ class UserModel extends \Core\Database
 
     function update($mail, $email, $mdp) {
         $id = $this->getId($mail);
-        $sth = $this->OpenCon()->prepare("UPDATE users SET email = :email, password = :mdp WHERE id = :id");
+        $sth = $this->conn->prepare("UPDATE users SET email = :email, password = :mdp WHERE id = :id");
         $sth->execute([":email" => $email, ":mdp" => $mdp, ":id" => $id]);
     }
 
     function delete($mail) {
         $id = $this->getId($mail);
-        $sth = $this->OpenCon()->prepare("DELETE FROM users WHERE id = :id");
+        $sth = $this->conn->prepare("DELETE FROM users WHERE id = :id");
         $sth->execute([":id" => $id]);
     }
 
     function read_all() {
-        $sth = $this->OpenCon()->query("SELECT * FROM users");
+        $sth = $this->conn->query("SELECT * FROM users");
         $sth->fetch();
         $res = $sth->fetch();
         

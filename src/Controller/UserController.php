@@ -22,14 +22,13 @@ class UserController extends \Core\Controller
         if (isset($_POST["email"]) && isset($_POST["password"])) {
             $user = new UserModel($this->req->getParam($_POST)["email"], $this->req->getParam($_POST)["password"]);
             $user->save();
-
+            echo $this->render("login");
+        }
+        else {
             // $article = new ORM();
             // $res = $article->find('articles', ["LIMIT" => "2"]);
             // print_r($res);
 
-            echo $this->render("login");
-        }
-        else {
             echo $this->render("register");
         }
     }

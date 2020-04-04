@@ -9,11 +9,13 @@ class UserModel extends \Core\Entity
     private $email;
     private $password;
     private $conn;
+    private $req;
 
-    public function __construct($email, $password) {
-        $this->email = $email;
-        $this->password = $password;
+    public function __construct() {
         $this->conn = Database::OpenCon();
+        $this->req = new \Core\Request();
+        $this->email = $this->req->getParam($_POST)["email"];
+        $this->password = $this->req->getParam($_POST)["password"];
     }
 
     function save() {

@@ -20,13 +20,13 @@ class UserController extends \Core\Controller
 
     public function addAction() {
         if (isset($_POST["email"]) && isset($_POST["password"])) {
-            $user = new UserModel($this->req->getParam($_POST)["email"], $this->req->getParam($_POST)["password"]);
+            $user = new UserModel();
             $user->save();
             echo $this->render("login");
         }
         else {
             // $article = new ORM();
-            // $res = $article->find('articles', ["LIMIT" => "2"]);
+            // $res = $article->read('articles', 1);
             // print_r($res);
 
             echo $this->render("register");
@@ -38,8 +38,8 @@ class UserController extends \Core\Controller
             echo $this->render("login");
         }
         else {
-            if (isset($this->req->getParam($_POST)["emailCo"]) && isset($this->req->getParam($_POST)["passwordCo"])) {
-                $log = new UserModel($this->req->getParam($_POST)["emailCo"], $this->req->getParam($_POST)["passwordCo"]);
+            if (isset($this->req->getParam($_POST)["email"]) && isset($this->req->getParam($_POST)["password"])) {
+                $log = new UserModel();
                 $log->login();
                 
                 if ($log->login() == true) {
@@ -54,5 +54,18 @@ class UserController extends \Core\Controller
 
     public function errorAction() {
         echo $this->render("404");
+    }
+
+    public function registerAction() {
+        // $params = $this->request->getQueryParams();
+
+        $user = new UserModel($_POST);
+        print_r($user);
+        if (!$user->id) {
+            $user->save();
+            self::$_render = "Votre compte a ete cree." . PHP_EOL ;
+        }
+
+        echo $this->render("register");
     }
 }

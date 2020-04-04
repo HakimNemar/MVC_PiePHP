@@ -7,4 +7,4 @@
     <input type="submit" value="Submit">
 </form>
 
-<h3><a href="./user/login">Login</a></h3>
+<h3><a href="/html/MVC_PiePHP/user/login">Login</a></h3>

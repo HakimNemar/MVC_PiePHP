@@ -17,6 +17,8 @@ class Core
         $myurl = explode("MVC_PiePHP", $_SERVER["REQUEST_URI"]);
         $name = "\Controller\\";
         
+        print_r(($myurl[1]));
+
         if (($route = Router::get($myurl[1])) != null) {
             $class = ucfirst($route["controller"]) . "Controller";
             $action = $route["action"] . "Action";
@@ -25,6 +27,7 @@ class Core
             $controller->$action();
         }
         else {
+            echo "route dynam";
             $arr = explode("/" , $_SERVER["REDIRECT_URL"]);
             $class = ucfirst($arr[3] . "Controller");
             

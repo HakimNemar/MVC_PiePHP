@@ -15,7 +15,9 @@ class UserController extends \Core\Controller
 
     public function indexAction() {
         echo "je suis dans UserController / indexAction";
-        echo $this->render("index");
+        $instance = new \Model\UserModel();
+        $user = $instance->read_all();
+        echo $this->render("index", ["users" => $user]);
     }
 
     public function addAction() {
@@ -56,16 +58,21 @@ class UserController extends \Core\Controller
         echo $this->render("404");
     }
 
-    public function registerAction() {
-        // $params = $this->request->getQueryParams();
-
-        $user = new UserModel($_POST);
-        print_r($user);
-        if (!$user->id) {
-            $user->save();
-            self::$_render = "Votre compte a ete cree." . PHP_EOL ;
-        }
-
-        echo $this->render("register");
+    public function deleteAction($id) {
+        var_dump($id);
+        echo $this->render("delete");
     }
+
+    // public function registerAction() {
+    //     // $params = $this->request->getQueryParams();
+
+    //     $user = new UserModel($_POST);
+    //     print_r($user);
+    //     if (!$user->id) {
+    //         $user->save();
+    //         self::$_render = "Votre compte a ete cree." . PHP_EOL ;
+    //     }
+
+    //     echo $this->render("register");
+    // }
 }

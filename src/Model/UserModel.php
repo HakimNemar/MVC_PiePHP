@@ -10,12 +10,15 @@ class UserModel extends \Core\Entity
     private $password;
     private $conn;
     private $req;
+    // private static $relations = [];
 
     public function __construct() {
         $this->conn = Database::OpenCon();
         $this->req = new \Core\Request();
-        $this->email = $this->req->getParam($_POST)["email"];
-        $this->password = $this->req->getParam($_POST)["password"];
+        if (count($_POST) > 0) {
+            $this->email = $this->req->getParam($_POST)["email"];
+            $this->password = $this->req->getParam($_POST)["password"];
+        }
     }
 
     function save() {
@@ -72,7 +75,7 @@ class UserModel extends \Core\Entity
     function read_all() {
         $sth = $this->conn->query("SELECT * FROM users");
         $sth->fetch();
-        $res = $sth->fetch();
+        $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
         
         return $res;
     }

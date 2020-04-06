@@ -1,4 +1,4 @@
-<pre>
+<!-- <pre> -->
     <?php
     // var_dump($_POST, $_GET, $_SERVER);
     
@@ -8,4 +8,4 @@
     $app = new Core\Core();
     $app->run();
     ?>
-</pre>
+<!-- </pre> -->

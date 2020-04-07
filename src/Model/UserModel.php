@@ -51,11 +51,11 @@ class UserModel extends \Core\Entity
         $sth->execute([":mail" => $mail, ":password" => $password]);
     }
 
-    function read($mail) {
-        $id = $this->getId($mail);
+    function read($id) {
+        // $id = $this->getId($mail);
         $sth = $this->conn->prepare("SELECT * FROM users WHERE id = :id");
         $sth->execute([":id" => $id]);
-        $res = $sth->fetch();
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
 
         return $res;
     }
@@ -66,8 +66,8 @@ class UserModel extends \Core\Entity
         $sth->execute([":email" => $email, ":mdp" => $mdp, ":id" => $id]);
     }
 
-    function delete($mail) {
-        $id = $this->getId($mail);
+    function delete($id) {
+        // $id = $this->getId($mail);
         $sth = $this->conn->prepare("DELETE FROM users WHERE id = :id");
         $sth->execute([":id" => $id]);
     }

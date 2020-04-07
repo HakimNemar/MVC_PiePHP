@@ -1,1 +1,3 @@
-<h1>Delete</h1>
+<a href="/html/MVC_PiePHP/user"><button>Go Back</button></a>
+
+<h1>Account deleted</h1>

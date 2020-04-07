@@ -59,8 +59,17 @@ class UserController extends \Core\Controller
     }
 
     public function deleteAction($id) {
-        var_dump($id);
+        $user = new UserModel();
+        $user->delete($id);
         echo $this->render("delete");
+    }
+
+    public function showAction($id) {
+        $user = new UserModel();
+        $res = $user->read($id);
+
+        print_r($res);
+        echo $this->render("show");
     }
 
     // public function registerAction() {

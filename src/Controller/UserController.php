@@ -65,23 +65,27 @@ class UserController extends \Core\Controller
     }
 
     public function showAction($id) {
-        $user = new UserModel();
-        $res = $user->read($id);
+        if ($id == "?") {
+            $user = new UserModel();
+            $res = $user->read_all();
 
-        print_r($res);
-        echo $this->render("show");
+            echo $this->render("show");
+            print_r($res[0]);
+            echo "<p>ID de l'utilisateur a afficher par defaut: $id </p>";
+        }
+        else {
+            $user = new UserModel();
+            $res = $user->read($id);
+            
+            echo $this->render("show");
+            print_r($res);
+
+            if (is_array($res)) {
+                echo "<p>ID de l'utilisateur a afficher : $id </p>";
+            }
+            else {
+                echo "a l'ID : $id";
+            }
+        }
     }
-
-    // public function registerAction() {
-    //     // $params = $this->request->getQueryParams();
-
-    //     $user = new UserModel($_POST);
-    //     print_r($user);
-    //     if (!$user->id) {
-    //         $user->save();
-    //         self::$_render = "Votre compte a ete cree." . PHP_EOL ;
-    //     }
-
-    //     echo $this->render("register");
-    // }
 }

@@ -10,7 +10,10 @@ class UserModel extends \Core\Entity
     private $password;
     private $conn;
     private $req;
-    // private static $relations = [];
+    private static $relations = [
+        "has many" => "article", // un article possède plusieurs commentaires
+        "has one" => "comments"  // un commentaire possède un seul article
+    ];
 
     public function __construct() {
         $this->conn = Database::OpenCon();
@@ -57,7 +60,12 @@ class UserModel extends \Core\Entity
         $sth->execute([":id" => $id]);
         $res = $sth->fetch(\PDO::FETCH_ASSOC);
 
-        return $res;
+        if ($res == null) {
+            return "Aucun user ";
+        }
+        else {   
+            return $res;
+        }
     }
 
     function update($mail, $email, $mdp) {
@@ -74,7 +82,6 @@ class UserModel extends \Core\Entity
 
     function read_all() {
         $sth = $this->conn->query("SELECT * FROM users");
-        $sth->fetch();
         $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
         
         return $res;

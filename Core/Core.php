@@ -58,7 +58,7 @@ class Core
                 $con = $name . $class;
                 $controller = new $con();
                 
-                if (method_exists($controller, $action)) {
+                if (method_exists($controller, $action) && $action != "showAction") {
                     $controller->$action();
                 }
                 else {

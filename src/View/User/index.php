@@ -1,5 +1,4 @@
-
-<h1>Render de src/view/user/index.php</h1>
+<a href="/html/MVC_PiePHP/user/article"><button>Articles</button></a>
 
 <?php
 

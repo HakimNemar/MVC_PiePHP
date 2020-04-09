@@ -14,7 +14,6 @@ class UserController extends \Core\Controller
     }
 
     public function indexAction() {
-        echo "je suis dans UserController / indexAction";
         $instance = new \Model\UserModel();
         $user = $instance->read_all();
         echo $this->render("index", ["users" => $user]);
@@ -71,7 +70,7 @@ class UserController extends \Core\Controller
 
             echo $this->render("show");
             print_r($res[0]);
-            echo "<p>ID de l'utilisateur a afficher par defaut: $id </p>";
+            echo "<p>ID de l'utilisateur a afficher par defaut: " . $res[0]['id'] . "</p>";
         }
         else {
             $user = new UserModel();
@@ -86,6 +85,23 @@ class UserController extends \Core\Controller
             else {
                 echo "a l'ID : $id";
             }
+        }
+    }
+
+    public function articleAction($id = null) {
+        if ($id == null) {
+            $article = new ORM();
+            $res = $article->find('articles');
+            
+            echo $this->render("article", ["article" => $res]);
+        }
+        else {
+            $article = new ORM();
+            $res = $article->find('commentaires', [
+                "WHERE" => "article_id = $id"
+            ]);
+
+            echo $this->render("comments", ["comments" => $res]);
         }
     }
 }

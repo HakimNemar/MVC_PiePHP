@@ -7,6 +7,6 @@
     <title>Pie PHP</title>
 </head>
 <body>
-    <?= $view ?> <!-- = echo $view; -->
+    <?= $view ?>
 </body>
 </html>

@@ -104,4 +104,15 @@ class UserController extends \Core\Controller
             echo $this->render("comments", ["comments" => $res]);
         }
     }
+
+    // public function registerAction() {
+    //     $params = $this->req->getParam($_POST) ;
+    //     $user = new UserModel($params);
+    //     var_dump($user);
+
+    //     if (!$user->id) {
+    //         $user->save();
+    //         self::$_render = " Votre compte a ete cree ." . PHP_EOL ;
+    //     }
+    // }
 }
